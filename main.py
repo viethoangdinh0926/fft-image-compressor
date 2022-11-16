@@ -9,11 +9,15 @@ import os
 
 class Compressor:
     def __init__(self):
+        # side of zoomed-in image to show on UI
         self.panel_size = 1000
+
+        # range of compress ratio (0% to 20% of the original image)
         self.scale_min_point = 0
         self.scale_max_point = 20
         self.defaut_scale_point = int((self.scale_max_point - self.scale_min_point)/2)
 
+        # setup UI
         self.root = tk.Tk()
         self.root.geometry("2100x1500")
         self.root.resizable(False, False)
@@ -75,6 +79,7 @@ class Compressor:
         self.my_canvas.config(scrollregion= self.my_canvas.bbox(tk.ALL))
         self.my_canvas.itemconfig('second_frame', height=self.my_canvas.winfo_height(), width=self.my_canvas.winfo_width())
 
+    # open image file from local machine
     def select_file(self, event):
         filetypes = [("image files", ".jpg .jpeg .png")]
         file = fd.askopenfilename(title='Choose an image',initialdir='~/',filetypes=filetypes)
@@ -104,13 +109,14 @@ class Compressor:
             self.org_panel.igmtk = imgtk
             self.org_panel.configure(image=imgtk)
 
-            # enable slider if necessary
-            if self.scale['state'] == tk.DISABLED:
-                self.scale['state'] = tk.NORMAL
-
+            # reset slider to default state for new image
             self.prev_filter_size = self.defaut_scale_point
             self.scale.set(self.defaut_scale_point)
             self.compress(None)
+
+            # enable slider if necessary
+            if self.scale['state'] == tk.DISABLED:
+                self.scale['state'] = tk.NORMAL
 
     def compress(self, event):
         filter_size = self.scale.get()
