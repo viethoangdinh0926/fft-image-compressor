@@ -109,14 +109,14 @@ class Compressor:
             self.org_panel.igmtk = imgtk
             self.org_panel.configure(image=imgtk)
 
+            # enable slider if necessary
+            if self.scale['state'] == tk.DISABLED:
+                self.scale['state'] = tk.NORMAL
+
             # reset slider to default state for new image
             self.prev_filter_size = self.defaut_scale_point
             self.scale.set(self.defaut_scale_point)
             self.compress(None)
-
-            # enable slider if necessary
-            if self.scale['state'] == tk.DISABLED:
-                self.scale['state'] = tk.NORMAL
 
     def compress(self, event):
         filter_size = self.scale.get()
